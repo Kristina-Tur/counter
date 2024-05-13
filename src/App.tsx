@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 
 function App() {
@@ -8,6 +8,19 @@ function App() {
         setValue(value + 1)
     }
 
+    useEffect(() => {
+        let valueIsString = localStorage.getItem('counterValue')
+        if (valueIsString !== null) {
+            let newValue = JSON.parse(valueIsString)
+            setValue(newValue)
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('counterValue', JSON.stringify(value))
+    }, [value])
+
+
     const onClickHandlerSetItem = () => {
         localStorage.setItem('counterValue', JSON.stringify(value))
         localStorage.setItem('counterValue+1', JSON.stringify(value))
@@ -15,7 +28,7 @@ function App() {
 
     const onClickHandlerGetItem = () => {
         let valueIsString = localStorage.getItem('counterValue')
-        if(valueIsString !== null){
+        if (valueIsString !== null) {
             let newValue = JSON.parse(valueIsString)
             setValue(newValue)
         }
@@ -26,7 +39,7 @@ function App() {
         setValue(0)
     }
 
-const removeItemFromLocalStorageHandler = () => {
+    const removeItemFromLocalStorageHandler = () => {
         localStorage.removeItem('counterValue+1')
     }
 
@@ -35,10 +48,10 @@ const removeItemFromLocalStorageHandler = () => {
         <div className="App">
             <div>{value}</div>
             <button onClick={onClickHandler}>+</button>
-            <button onClick={onClickHandlerSetItem}>setToLocalStorage</button>
+            {/*<button onClick={onClickHandlerSetItem}>setToLocalStorage</button>
             <button onClick={onClickHandlerGetItem}>getFromLocalStorage</button>
             <button onClick={clearLocalStorageHandler}>clearLocalStorage</button>
-            <button onClick={removeItemFromLocalStorageHandler}>removeItemFromLocalStorage</button>
+            <button onClick={removeItemFromLocalStorageHandler}>removeItemFromLocalStorage</button>*/}
         </div>
     );
 }
