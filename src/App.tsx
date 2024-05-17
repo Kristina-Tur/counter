@@ -4,7 +4,7 @@ import {Button} from './components/Button';
 import {Counter2} from './components/Counter2';
 
 
-//во втором каунтере один юсстэйт, а изменение
+//во втором каунтере один юсстэйт, а изменение юсрейф
 function App() {
     const [value, setValue] = useState(0)
     const [disabledINC, setDisabledINC] = useState(false)
