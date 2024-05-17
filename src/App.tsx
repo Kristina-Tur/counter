@@ -1,57 +1,39 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
+import {Button} from './components/Button';
+import {Counter2} from './components/Counter2';
 
 function App() {
-    let [value, setValue] = useState(0)
+    const [value, setValue] = useState(0)
+    const [disabledINC, setDisabledINC] = useState(false)
+    const [disabledRESET, setDisabledRESET] = useState(true)
 
-    const onClickHandler = () => {
+    const INCHandler = () => {
         setValue(value + 1)
-    }
 
-    useEffect(() => {
-        let valueIsString = localStorage.getItem('counterValue')
-        if (valueIsString !== null) {
-            let newValue = JSON.parse(valueIsString)
-            setValue(newValue)
-        }
-    }, [])
+        setDisabledRESET(false)
 
-    useEffect(() => {
-        localStorage.setItem('counterValue', JSON.stringify(value))
-    }, [value])
-
-
-    const onClickHandlerSetItem = () => {
-        localStorage.setItem('counterValue', JSON.stringify(value))
-        localStorage.setItem('counterValue+1', JSON.stringify(value))
-    }
-
-    const onClickHandlerGetItem = () => {
-        let valueIsString = localStorage.getItem('counterValue')
-        if (valueIsString !== null) {
-            let newValue = JSON.parse(valueIsString)
-            setValue(newValue)
+        if (value === 4) {
+            setDisabledINC(true)
         }
     }
 
-    const clearLocalStorageHandler = () => {
-        localStorage.clear()
+    const RESETHandler = () => {
         setValue(0)
+        setDisabledINC(false)
+        setDisabledRESET(true)
     }
-
-    const removeItemFromLocalStorageHandler = () => {
-        localStorage.removeItem('counterValue+1')
-    }
-
 
     return (
         <div className="App">
-            <div>{value}</div>
-            <button onClick={onClickHandler}>+</button>
-            {/*<button onClick={onClickHandlerSetItem}>setToLocalStorage</button>
-            <button onClick={onClickHandlerGetItem}>getFromLocalStorage</button>
-            <button onClick={clearLocalStorageHandler}>clearLocalStorage</button>
-            <button onClick={removeItemFromLocalStorageHandler}>removeItemFromLocalStorage</button>*/}
+            <div className={'container'}>
+                <div className={`counter ${value === 5 ? 'colorCounter' : ''}`}>{value}</div>
+                <div className={'buttonWrapper'}>
+                    <Button className={'button'} title={'INC'} onClick={INCHandler} disabled={disabledINC}/>
+                    <Button className={'button'} title={'RESET'} onClick={RESETHandler} disabled={disabledRESET}/>
+                </div>
+            </div>
+            <Counter2/>
         </div>
     );
 }
