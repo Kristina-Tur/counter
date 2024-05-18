@@ -1,23 +1,17 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Button} from './Button';
 
 export const Counter2 = () => {
     const [value, setValue] = useState(0)
-    const [maxValue, setMaxValue] = useState(0)
+    const ref = useRef<number>(0)
     const [line, setLine] = useState(0)
-   /* const [lineWrapper, setLineWrapper] = useState(0)*/
+   /* let line= 0*/
 
     const styleLine = {
         width: `${line}px`,
         height: '10px',
         backgroundColor: 'green',
     }
-
-    /*const lineWrapperStyle = {
-        width: lineWrapper,
-        height: '40px',
-        border: '2px solid green'
-    }*/
 
     const INCHandler = () => {
         setValue(value + 1)
@@ -29,14 +23,15 @@ export const Counter2 = () => {
 
     const RESETHandler = () => {
         setValue(0)
-        setMaxValue(value)
         setLine(0)
+        /*line = 0*/
+        ref.current = value
     }
 
     return (
         <div className={'containerCounter'}>
-            <p>Max value: {maxValue}</p>
-            <div>{value}</div>
+            <p className={'text'}>Max value: {ref.current ? ref.current : 0}</p>
+            <div className={'text'}>{value}</div>
             <div className={'lineWrapper'}>
                 <p style={styleLine}></p>
             </div>

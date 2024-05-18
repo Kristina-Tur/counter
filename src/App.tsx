@@ -6,25 +6,16 @@ import {Counter2} from './components/Counter2';
 
 //во втором каунтере один юсстэйт, а изменение юсрейф
 function App() {
+    const counter = 0
+    const maxCounter = 5
     const [value, setValue] = useState(0)
-    const [disabledINC, setDisabledINC] = useState(false)
-    const [disabledRESET, setDisabledRESET] = useState(true)
 
     const INCHandler = () => {
-
         setValue(value + 1)
-
-        setDisabledRESET(false)
-
-        if (value === 4) {
-            setDisabledINC(true)
-        }
     }
 
     const RESETHandler = () => {
         setValue(0)
-        setDisabledINC(false)
-        setDisabledRESET(true)
     }
 
     return (
@@ -32,8 +23,8 @@ function App() {
             <div className={'container'}>
                 <div className={`counter ${value === 5 ? 'colorCounter' : ''}`}>{value}</div>
                 <div className={'buttonWrapper'}>
-                    <Button className={'button'} title={'INC'} onClick={INCHandler} disabled={disabledINC}/>
-                    <Button className={'button'} title={'RESET'} onClick={RESETHandler} disabled={disabledRESET}/>
+                    <Button className={'button'} title={'INC'} onClick={INCHandler} disabled={value === maxCounter}/>
+                    <Button className={'button'} title={'RESET'} onClick={RESETHandler} disabled={value === counter}/>
                 </div>
             </div>
             <Counter2/>
