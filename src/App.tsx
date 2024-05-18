@@ -11,6 +11,7 @@ function App() {
     const [disabledRESET, setDisabledRESET] = useState(true)
 
     const INCHandler = () => {
+
         setValue(value + 1)
 
         setDisabledRESET(false)
