@@ -1,3 +1,7 @@
+*{
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
   height: 100vh;
@@ -54,16 +58,17 @@
 }
 
 .counter {
+  color: aqua;
+  font-size: 50px;
+  font-weight: bold;
   min-width: 300px;
   height: 110px;
+  border: 3px solid aqua;
   border-radius: 10px;
-  background-color: aqua;
-  font-size: 50px;
-  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .buttonWrapper {
@@ -102,3 +107,29 @@
 .text{
   color: white;
 }
+
+.valueSettingsWrapper{
+  font-size: 20px;
+  font-weight: bold;
+  color: aqua;
+  min-width: 300px;
+  height: 110px;
+  border: 3px solid aqua;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.valueSettingsPar{
+  margin: 12px 0;
+}
+
+.valueSettingsInput {
+  max-width: 120px;
+  height: 25px;
+  border: 3px solid aqua;
+  font-size: 18px;
+  margin-left: 30px;
+  text-align: center;
+}
+
+
