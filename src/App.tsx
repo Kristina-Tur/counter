@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Counter2} from './components/Counter2';
 import {Counter} from './components/Counter';
@@ -18,11 +18,16 @@ function App() {
         setValue(0)
     }
 
-    const setCounter = (value: string, maxValue: string) => {
-        localStorage.setItem('counterValue', value)
+    const setCounter = (startValue: string, maxValue: string) => {
+        localStorage.setItem('counterValue', startValue)
         localStorage.setItem('counterMaxValue', maxValue)
-        alert(value + maxValue)
     }
+
+    /*useEffect(() => {
+        localStorage.setItem('counterValue', JSON.stringify(value))
+    }, [value])*/
+
+
 
    /* useEffect(() => {
         let valueIsString = localStorage.getItem('counterValue')
