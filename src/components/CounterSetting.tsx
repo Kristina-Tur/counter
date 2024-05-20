@@ -6,23 +6,37 @@ type CounterSettingType = {
 }
 
 export const CounterSetting = ({setCounter}: CounterSettingType) => {
-    const [value, setValue] = useState('');
-    const [maxValue, setMaxValue] = useState('');
+    const [value, setValue] = useState<string>('');
+    const [maxValue, setMaxValue] = useState<string>('');
+    useEffect(() => {
+        localStorage.setItem('counterValue', value)
+    }, [value])
+    useEffect(() => {
+        localStorage.setItem('counterMaxValue', maxValue)
+    }, [maxValue])
+
+    useEffect(() => {
+        let valueIsString = localStorage.getItem('counterValue')
+        if (valueIsString !== null) {
+            let newValue = valueIsString
+            setValue(newValue)
+        }
+        let maxValueIsString = localStorage.getItem('counterMaxValue')
+        if (maxValueIsString !== null) {
+            let newMaxValue = maxValueIsString
+            setMaxValue(newMaxValue)
+        }
+
+    }, [])
 
     const getValueInput = (event: ChangeEvent<HTMLInputElement>) => {
         setValue(event.currentTarget.value)
-
     }
+
     const getMaxValueInput = (event: ChangeEvent<HTMLInputElement>) => {
         setMaxValue(event.currentTarget.value)
     }
-    /*useEffect(() => {
-        let valueIsString = localStorage.getItem('counterValue')
-        if (valueIsString !== null) {
-            let newValue = JSON.parse(valueIsString)
-            setValue(newValue)
-        }
-    }, [])*/
+
 
     return (
         <div className={'container'}>
@@ -37,7 +51,8 @@ export const CounterSetting = ({setCounter}: CounterSettingType) => {
                 </p>
             </div>
             <div className={'buttonWrapper'}>
-                <Button className={'button'} title={'SET'} onClick={() => setCounter(value, maxValue)} disabled={false}/>
+                <Button className={'button'} title={'SET'} onClick={() => setCounter(value, maxValue)}
+                        disabled={false}/>
             </div>
         </div>
     );
