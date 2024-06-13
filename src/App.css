@@ -132,4 +132,19 @@
   text-align: center;
 }
 
+.error-message{
+  color: red;
+  font-size: 26px;
+}
+
+.inputError{
+  border: 3px solid red;
+
+  max-width: 120px;
+  height: 25px;
+  font-size: 18px;
+  margin-left: 30px;
+  text-align: center;
+}
+
 

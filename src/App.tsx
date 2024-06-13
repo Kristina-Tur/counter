@@ -1,50 +1,88 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import './App.css';
 import {Counter2} from './components/Counter2';
 import {Counter} from './components/Counter';
 import {CounterSetting} from './components/CounterSetting';
 import {Exam} from './exam';
+import {Button} from "./components/Button";
+import {json} from "node:stream/consumers";
 
 
 function App() {
-    const counter = 0
-    const maxCounter = 5
-    const [value, setValue] = useState(0)
+    const [counter, setCounter] = useState(0)
+    const [startValue, setStartValue] = useState(0);
+    const [maxValue, setMaxValue] = useState(0);
+    const [error, setError] = useState<null | string>(null)
+
+    useEffect(() => {
+        const startValueIsString = localStorage.getItem('counterStartValue')
+        const maxValueIsString = localStorage.getItem('counterMaxValue')
+
+        if (startValueIsString && maxValueIsString) {
+            const startValueNumber = JSON.parse(startValueIsString)
+            const maxValueNumber = JSON.parse(maxValueIsString)
+
+            setStartValue(startValueNumber)
+            setMaxValue(maxValueNumber)
+            setCounter(startValueNumber)
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('counterStartValue', JSON.stringify(startValue))
+    }, [startValue])
+    useEffect(() => {
+        localStorage.setItem('counterMaxValue', JSON.stringify(maxValue))
+    }, [maxValue])
 
     const incCounter = () => {
-        setValue(value + 1)
+        setCounter(counter + 1)
     }
 
     const resetCounter = () => {
-        setValue(0)
+        setCounter(0)
     }
-    /*useEffect(() => {
-        let valueIsString = localStorage.getItem('counterValue')
-        if (valueIsString !== null) {
-            let newValue = valueIsString
-            setValue(newValue)
+
+    const getStartValue = (event: ChangeEvent<HTMLInputElement>) => {
+        const valueToNumber = parseInt(event.currentTarget.value)
+        setStartValue(valueToNumber)
+    }
+
+    const getMaxValueInput = (event: ChangeEvent<HTMLInputElement>) => {
+        const valueToNumber = parseInt(event.currentTarget.value)
+        setMaxValue(valueToNumber)
+    }
+
+    const SetInCounter = () => {
+        setError(null)
+        if(startValue === maxValue || startValue > maxValue){
+            setError('set the correct value')
+        }else{
+            setCounter(startValue)
         }
-    }, [])*/
-    const setCounter = (startValue: string, maxValue: string) => {
-        /*localStorage.setItem('counterValue', startValue)
-        localStorage.setItem('counterMaxValue', maxValue)*/
-
     }
 
-
+    const clearError = () => {
+        setError(null)
+        setCounter(0)
+    }
 
     return (
         <div className="App">
-            <CounterSetting setCounter={setCounter}/>
+            <CounterSetting
+                getStartValue={getStartValue}
+                getMaxValueInput={getMaxValueInput}
+                setInCounter={SetInCounter}
+                error={error}
+                clearError={clearError}
+            />
             <Counter
                 counter={counter}
-                maxCounter={maxCounter}
-                value={value}
+                maxValue={maxValue}
                 incCounter={incCounter}
                 resetCounter={resetCounter}
+                error={error}
             />
-            {/*<Counter2/>*/}
-            {/*<Exam/>*/}
         </div>
     );
 }
